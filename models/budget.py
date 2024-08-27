@@ -28,7 +28,7 @@ class Budget(db.Model):
     start_date = db.Column(db.DateTime(), nullable=False)
     end_date = db.Column(db.DateTime(), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey(user.User.id), nullable=False)
-    user = db.relationship("User", backref=db.backref("budget", lazy=True), cascade="all")
+    user = db.relationship("User", backref=db.backref("budget", lazy=True))
 
     def __str__(self):
         """Returns a string representation of the budget"""
@@ -39,7 +39,7 @@ class Budget(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self, amount, start_date, end_date):
+    def update(self, name, amount, start_date, end_date):
         """Updates the budget details"""
         self.amount = amount
         self.start_date = start_date
