@@ -1,6 +1,6 @@
 from datetime import datetime
 from exts import db
-from . import user, wallet
+from . import wallet
 """Expenses Module"""
 
 
@@ -27,7 +27,7 @@ class Expense(db.Model):
     category = db.Column(db.String(), nullable=False)
     date_spent = db.Column(db.Date, nullable=False)
     wallet_id = db.Column(db.Integer, db.ForeignKey("wallet.id"), nullable=False)
-    wallet = db.relationship("Wallet", backref=db.backref("expenses", lazy=True), cascade="all")
+    wallet = db.relationship("Wallet", backref=db.backref("expenses", lazy=True))
 
     def __str__(self):
         """Returns a string representation of the income"""
