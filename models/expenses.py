@@ -38,11 +38,10 @@ class Expense(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self, amount, category, wallet):
+    def update(self, amount, category, date_spent):
         """Updates expense information"""
         self.amount = amount
         self.category = category
-        self.wallet = wallet
         db.session.add(self)
         db.session.commit()
 

@@ -69,7 +69,7 @@ class IncomeResource(Resource):
         income_to_update.update(data.get("amount"), data.get("category"), date_received)
         return jsonify({"message": "Successfully updated income"})
 
-    @jwt_required
+    @jwt_required()
     def delete(self, id):
         """Delete an income by id"""
         income_to_delete = Income.query.get_or_404(id)
