@@ -20,7 +20,7 @@ expenses_model = expenses_ns.model(
 )
 
 
-@expenses_ns.route("/expenses")
+@expenses_ns.route("/")
 class ExpensesResource(Resource):
 
     @expenses_ns.expect(expenses_model)
@@ -49,7 +49,7 @@ class ExpensesResource(Resource):
         expenses = Expense.query.all()
         return expenses
 
-@expenses_ns.route("/expenses/<int:id>")
+@expenses_ns.route("/<int:id>")
 class ExpensesResource(Resource):
 
     @expenses_ns.marshal_with(expenses_model)

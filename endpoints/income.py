@@ -20,7 +20,7 @@ income_model = income_ns.model(
 )
 
 
-@income_ns.route("/income")
+@income_ns.route("/")
 class IncomeResource(Resource):
 
     @income_ns.expect(income_model)
@@ -49,7 +49,7 @@ class IncomeResource(Resource):
         income = Income.query.all()
         return income
 
-@income_ns.route("/income/<int:id>")
+@income_ns.route("/<int:id>")
 class IncomeResource(Resource):
 
     @income_ns.marshal_with(income_model)

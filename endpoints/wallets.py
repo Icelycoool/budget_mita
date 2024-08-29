@@ -18,7 +18,7 @@ wallet_model = wallets_ns.model(
 )
 
 
-@wallets_ns.route("/wallets")
+@wallets_ns.route("/")
 class WalletsResource(Resource):
 
     @wallets_ns.marshal_list_with(wallet_model)
@@ -43,7 +43,7 @@ class WalletsResource(Resource):
         new_wallet.save()
         return new_wallet, 201
 
-@wallets_ns.route("/wallets/<int:id>")
+@wallets_ns.route("/<int:id>")
 class WalletsResource(Resource):
 
     @wallets_ns.marshal_with(wallet_model)

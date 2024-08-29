@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_restx import fields, Resource, Namespace
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required
+from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt
 from models.user import User
 
 
@@ -70,7 +70,7 @@ class SignupResource(Resource):
         new_user.save()
         return jsonify({"message": f"User {username} created successfully!"})
 
-@auth_ns.route("/profile/<int:id>")
+@auth_ns.route("/user/<int:id>")
 class ProfileResource(Resource):
 
     @auth_ns.marshal_with(signup_model)
@@ -125,5 +125,10 @@ class LoginResource(Resource):
 @auth_ns.route("/logout")
 class LogoutResource(Resource):
     """Logs out a User"""
+    jwt_blocklist = set()
+
+    @jwt_required()
     def post(self):
-        pass
+        jti = get_jwt()["jti"]
+        self.jwt_blocklist.add(jti)
+        return jsonify({"message": "Successfully logged out"})

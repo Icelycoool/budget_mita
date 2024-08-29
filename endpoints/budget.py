@@ -19,10 +19,11 @@ budget_model = budget_ns.model(
     }
 )
 
-@budget_ns.route("/budget")
+@budget_ns.route("/")
 class BudgetResource(Resource):
+    @budget_ns.marshal_with(budget_model)
     @budget_ns.expect(budget_model)
-    @jwt_required
+    @jwt_required()
     def post(self):
         """Create a new budget"""
         data = request.get_json()
@@ -36,25 +37,25 @@ class BudgetResource(Resource):
             user_id = data.get('user_id')
         )
         new_budget.save()
-        return jsonify({"message": "Budget created Successfully"})
+        return new_budget
 
     @budget_ns.marshal_list_with(budget_model)
-    @jwt_required
+    @jwt_required()
     def get(self):
         """Get all the budgets"""
         budgets = Budget.query.all()
         return budgets
 
-@budget_ns.route("/budget/<int:id>")
+@budget_ns.route("/<int:id>")
 class BudgetResource(Resource):
     @budget_ns.marshal_with(budget_model)
-    @jwt_required
+    @jwt_required()
     def get(self, id):
         """Get a budget by id"""
         budget = Budget.query.get_or_404(id)
         return budget
 
-    @jwt_required
+    @jwt_required()
     def put(self, id):
         """Update a budget by id"""
         budget_to_update = Budget.query.get_or_404(id)
@@ -69,7 +70,7 @@ class BudgetResource(Resource):
         )
         return jsonify({"message": "Budget updated successfully"})
 
-    @jwt_required
+    @jwt_required()
     def delete(self, id):
         """Delete a budget by id"""
         budget_to_delete = Budget.query.get_or_404(id)
