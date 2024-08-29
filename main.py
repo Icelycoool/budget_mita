@@ -40,6 +40,7 @@ def create_app(config):
             "wallet": Wallet,
             "income": Income,
             "expense": Expense,
+            "budget": Budget,
         }
 
     return app

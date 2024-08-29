@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_restx import fields, Resource, Namespace
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt
@@ -44,19 +44,19 @@ class SignupResource(Resource):
         required_fields = ['first_name', 'last_name', 'username', 'password', 'confirmation', 'email']
         for field in required_fields:
             if not data.get(field):
-                return jsonify({"message": f"{field} is required"})
+                return make_response(jsonify({"message": f"{field} is required"}), 400)
 
         # Check if username already exists
         username = data.get('username')
         db_user = User.query.filter_by(username=username).first()
         if db_user:
-            return jsonify({"message": f"Username with {username} already exists"})
+            return make_response(jsonify({"message": f"Username with {username} already exists"}), 400)
 
         # Chek if password and the confirmation are matching
         password = data.get('password')
         confirmation = data.get('confirmation')
         if password != confirmation:
-            return jsonify({"message": "Passwords do not match"})
+            return make_response(jsonify({"message": "Passwords do not match"}), 400)
 
         
         # Create the user
@@ -68,7 +68,7 @@ class SignupResource(Resource):
             email = data.get("email"),
         )
         new_user.save()
-        return jsonify({"message": f"User {username} created successfully!"})
+        return make_response(jsonify({"message": f"User {username} created successfully!"}), 201)
 
 @auth_ns.route("/user/<int:id>")
 class ProfileResource(Resource):
@@ -87,14 +87,14 @@ class ProfileResource(Resource):
         data = request.get_json()
         user_to_update.update(data.get("currency"))
         user_to_update.save()
-        return jsonify({"message": f"You currency has been set to {currency}"})
+        return make_response(jsonify({"message": "Your currency has been changed successfully"}), 200)
 
     @jwt_required()
     def delete(self, id):
         """Deletes a User"""
         user_to_delete = User.query.get_or_404(id)
         user_to_delete.delete()
-        return jsonify({"message": "User deleted successfully"})
+        return make_response(jsonify({"message": "User deleted successfully"}), 200)
 
 @auth_ns.route("/login")
 class LoginResource(Resource):
@@ -109,7 +109,7 @@ class LoginResource(Resource):
         required_fields = ["username", "password"]
         for field in required_fields:
             if not data.get(field):
-                return jsonify({"message": f"{field} is required"})
+                return make_response(jsonify({"message": f"{field} is required"}), 400)
 
         # Query the database for the user name
         db_user = User.query.filter_by(username=username).first()
@@ -119,7 +119,9 @@ class LoginResource(Resource):
             access_token = create_access_token(identity=db_user.username)
             refresh_token = create_refresh_token(identity=db_user.username)
 
-            return jsonify({"access_token": access_token, "refresh_token": refresh_token})
+            return make_response(jsonify({"access_token": access_token, "refresh_token": refresh_token}), 201)
+      
+        return make_response(jsonify({"message": "Invalid username or password"}), 401)
             
 
 @auth_ns.route("/logout")
@@ -131,4 +133,4 @@ class LogoutResource(Resource):
     def post(self):
         jti = get_jwt()["jti"]
         self.jwt_blocklist.add(jti)
-        return jsonify({"message": "Successfully logged out"})
+        return make_response(jsonify({"message": "Successfully logged out"}), 201)
