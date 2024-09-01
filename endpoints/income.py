@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from datetime import datetime
 from flask_restx import fields, Resource, Namespace
 from flask_jwt_extended import jwt_required
@@ -39,7 +39,7 @@ class IncomeResource(Resource):
         )
         
         new_income.save()
-        return jsonify({"message": "Successfully added income"})
+        return make_response(jsonify({"message": "Successfully added income"}), 201)
 
 
     @income_ns.marshal_list_with(income_model)

@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from datetime import datetime
 from flask_restx import fields, Resource, Namespace
 from flask_jwt_extended import jwt_required
@@ -39,7 +39,7 @@ class ExpensesResource(Resource):
         )
         
         new_expense.save()
-        return jsonify({"message": "Successfully added expense"})
+        return make_response (jsonify({"message": "Successfully added expense"}), 201)
 
 
     @expenses_ns.marshal_list_with(expenses_model)

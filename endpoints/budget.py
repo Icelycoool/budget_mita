@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from datetime import datetime
 from flask_restx import fields, Resource, Namespace
 from flask_jwt_extended import jwt_required
@@ -37,7 +37,7 @@ class BudgetResource(Resource):
             user_id = data.get('user_id')
         )
         new_budget.save()
-        return new_budget
+        return new_budget, 201
 
     @budget_ns.marshal_list_with(budget_model)
     @jwt_required()
@@ -68,11 +68,11 @@ class BudgetResource(Resource):
             start_date = start_date,
             end_date = end_date
         )
-        return jsonify({"message": "Budget updated successfully"})
+        return make_response(jsonify({"message": "Budget updated successfully"}), 201)
 
     @jwt_required()
     def delete(self, id):
         """Delete a budget by id"""
         budget_to_delete = Budget.query.get_or_404(id)
         budget_to_delete.delete()
-        return jsonify({"message": "Budget deleted successfully"})
+        return make_response(jsonify({"message": "Budget deleted successfully"}), 201)
