@@ -7,6 +7,28 @@ export default {
 				sans: ["Roboto", "sans-serif"],
 			},
 		},
+
+		colors: {
+			primary: "#19375A",
+			secondary: "#EC7630",
+			secondaryHover: "#CC632F",
+			accent: "#808080",
+			white: "#F4F4F4",
+		},
 	},
-	plugins: [],
+	plugins: [
+		function ({ addUtilities }) {
+			addUtilities({
+				".mix-blend-multiply": {
+					"mix-blend-mode": "multiply",
+				},
+				".mix-blend-overlay": {
+					"mix-blend-mode": "overlay",
+				},
+				".mix-blend-screen": {
+					"mix-blend-mode": "screen",
+				},
+			})
+		},
+	],
 }
