@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { FaWallet, FaMoneyBillWave, FaMoneyCheckAlt, FaBullseye, FaSignOutAlt, FaUser } from "react-icons/fa"
-import { AiFillDashboard } from "react-icons/ai"
 import logo from "../assets/logo-white-01.svg"
 import Wallet from "../components/Wallet"
+import Income from "../components/Income"
+import Expense from "../components/Expenses"
+import Budget from "../components/Budget"
 
 const Dashboard = () => {
 	const [activeComponent, setActiveComponent] = useState("Wallet")
@@ -10,8 +12,6 @@ const Dashboard = () => {
 
 	const renderComponent = () => {
 		switch (activeComponent) {
-			case "Dashboard":
-				return <Summary />
 			case "Wallet":
 				return <Wallet />
 			case "Income":
@@ -29,19 +29,15 @@ const Dashboard = () => {
 		<div className="min-h-screen flex">
 			{/* Sidebar */}
 			<div
-				className={`text-center min-h-screen  text-white w-1/10 bg-primary p-5 flex flex-col md:justify-between fixed md:relative transform ${
+				className={`text-center min-h-screen text-white w-1/9 bg-primary p-5 flex flex-col md:justify-between fixed md:relative transform ${
 					sidebarOpen ? "translate-x-0" : "-translate-x-full"
 				} md:translate-x-0 transition-transform duration-300 ease-in-out z-20`}>
 				<div>
-					<div className="w-10 h-10 mx-auto mb-20">
+					<div className="w-10 h-10 mx-auto mb-20 ">
 						<img src={logo} alt="Budget Mita logo" />
 					</div>
 					<div className="text-2xl font-bold uppercase mb-10">Menu</div>
 					<nav className="space-y-6">
-						<button onClick={() => setActiveComponent("Dashboard")} className="flex items-center justify-center text-xl space-x-2 px-10 hover:text-secondary transition-colors">
-							<AiFillDashboard />
-							<span>Dashboard</span>
-						</button>
 						<button onClick={() => setActiveComponent("Wallet")} className="flex items-center justify-center text-xl space-x-2 px-10 hover:text-secondary transition-colors">
 							<FaWallet />
 							<span>Wallet</span>
@@ -68,14 +64,11 @@ const Dashboard = () => {
 					</button>
 				</div>
 			</div>
-
-			{/* Overlay */}
 			<div className={`fixed inset-0 z-10 md:hidden ${sidebarOpen ? "block" : "hidden"}`} onClick={() => setSidebarOpen(false)}></div>
-
 			{/* Content Area */}
-			<div className="w-full md:w-9/10 ml-auto">
-				<div className="bg-secondary">
-					<header className="flex items-center justify-between mb-4 px-10 p-4">
+			<div className="w-full md:w-8/9 ml-auto">
+				<div>
+					<header className="flex items-center justify-between mb-4 px-16 p-4 bg-secondary text-white shadow-md z-30">
 						<button className="text-white hover:text-black md:hidden" onClick={() => setSidebarOpen(!sidebarOpen)}>
 							<svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
@@ -91,15 +84,15 @@ const Dashboard = () => {
 						</button>
 					</header>
 				</div>
-				<div className="p-5">{renderComponent()}</div>
+				<div className="p-16 ">{renderComponent()}</div>
+				<footer className="bg-white text-primary fixed w-full bottom-0 right-0 py-4">
+					<div className="container mx-auto text-center">
+						<p className="text-sm">&copy; {new Date().getFullYear()} Budget Mita. All rights reserved.</p>
+					</div>
+				</footer>
 			</div>
 		</div>
 	)
 }
-
-const Summary = () => <div>Summary Component</div>
-const Income = () => <div>Income Component</div>
-const Expense = () => <div>Expense Component</div>
-const Budget = () => <div>Budget Component</div>
 
 export default Dashboard

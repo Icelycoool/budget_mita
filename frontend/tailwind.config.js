@@ -13,6 +13,7 @@ export default {
 			secondary: "#EC7630",
 			secondaryHover: "#CC632F",
 			accent: "#808080",
+			accentHover: "#5a5a5a",
 			white: "#F4F4F4",
 		},
 	},

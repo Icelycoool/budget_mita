@@ -13,7 +13,7 @@ const Wallet = () => {
 	const colorClasses = ["bg-primary", "bg-secondary", "bg-accent", "bg-secondaryHover"]
 
 	return (
-		<div className="p-6">
+		<div>
 			{/* Add Wallet and Total Balance Section */}
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
 				<div className="bg-white p-4 rounded-lg ">
@@ -28,7 +28,7 @@ const Wallet = () => {
 					</div>
 					<div className="flex space-x-4">
 						<button className="bg-secondary hover:bg-secondaryHover text-white px-4 py-2 rounded-md">SAVE</button>
-						<button className="bg-secondary hover:bg-secondaryHover text-white px-4 py-2 rounded-md">CANCEL</button>
+						<button className="bg-accent hover:bg-accentHover text-white px-4 py-2 rounded-md">CANCEL</button>
 					</div>
 				</div>
 				<div className="bg-primary text-white p-4 relative rounded-lg md:col-span-1 flex flex-col justify-center items-center">
