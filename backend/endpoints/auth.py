@@ -119,7 +119,7 @@ class LoginResource(Resource):
             access_token = create_access_token(identity=db_user.username)
             refresh_token = create_refresh_token(identity=db_user.username)
 
-            return make_response(jsonify({"access_token": access_token, "refresh_token": refresh_token}), 201)
+            return make_response(jsonify({"access_token": access_token, "refresh_token": refresh_token, "username": username}), 201)
       
         return make_response(jsonify({"message": "Invalid username or password"}), 401)
             

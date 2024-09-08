@@ -29,11 +29,11 @@ def create_app(config):
     JWTManager(app)
 
     api = Api(app, doc="/docs")
-    api.add_namespace(auth_ns)
-    api.add_namespace(wallets_ns)
-    api.add_namespace(income_ns)
-    api.add_namespace(expenses_ns)
-    api.add_namespace(budget_ns)
+    api.add_namespace(auth_ns, path="/api/auth")
+    api.add_namespace(wallets_ns, path="/api/wallet")
+    api.add_namespace(income_ns, path="/api/income")
+    api.add_namespace(expenses_ns, path="/api/expenses")
+    api.add_namespace(budget_ns, path="/api/budget")
 
 
     @api.route("/welcome")
