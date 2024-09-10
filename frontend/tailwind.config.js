@@ -15,6 +15,7 @@ export default {
 			accent: "#808080",
 			accentHover: "#5a5a5a",
 			white: "#F4F4F4",
+			whiteHover: "#E2E2E2",
 		},
 	},
 	plugins: [

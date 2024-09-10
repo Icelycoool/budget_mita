@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from flask_restx import fields, Resource, Namespace
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.wallet import Wallet
 
 wallets_ns = Namespace("wallets", description="Wallets Management")
@@ -25,7 +25,8 @@ class WalletsResource(Resource):
     @jwt_required()
     def get(self):
         """Get all the wallets"""
-        wallets = Wallet.query.all()
+        user_id = get_jwt_identity()
+        wallets = Wallet.query.filter_by(user_id=user_id).all()
         return wallets
 
 
@@ -34,11 +35,12 @@ class WalletsResource(Resource):
     @jwt_required()
     def post(self):
         """Create a new wallet"""
+        user_id = get_jwt_identity()
         data = request.get_json()
         new_wallet = Wallet(
             name = data.get("name"),
             balance = data.get("balance"),
-            user_id = data.get("user_id")
+            user_id = user_id
         )
         new_wallet.save()
         return new_wallet, 201

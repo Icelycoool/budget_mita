@@ -43,7 +43,7 @@ const Login = () => {
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-100">
 			<div className="flex flex-col md:flex-row bg-white shadow-md rounded-lg overflow-hidden w-4/5 max-w-4xl">
-				{/* Right Side - Form */}
+				{/* Left Side - Form */}
 				<div className="w-full md:w-1/2 p-8">
 					<div className="text-center mb-6">
 						<div className="w-8 h-8 rounded-full mx-auto mb-10">
@@ -92,7 +92,7 @@ const Login = () => {
 					<div className="text-center pt-10">Budget Mita &copy;{new Date().getFullYear()}</div>
 				</div>
 
-				{/* Left Side */}
+				{/* Right Side - Image */}
 				<div className="hidden md:block md:w-1/2">
 					<div className="relative w-full h-full nd:w-1/2">
 						<img src={finance} alt="An image showing finance management" className="object-cover w-full h-full" />

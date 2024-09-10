@@ -1,14 +1,24 @@
-// import { useState } from "react"
+// import { useState, useEffect } from "react"
 // import { FaWallet, FaMoneyBillWave, FaMoneyCheckAlt, FaBullseye, FaSignOutAlt, FaUser } from "react-icons/fa"
 // import logo from "../assets/logo-white-01.svg"
 // import Wallet from "../components/Wallet"
 // import Income from "../components/Income"
 // import Expense from "../components/Expenses"
 // import Budget from "../components/Budget"
+// import Profile from "../components/Profile"
 
 // const Dashboard = () => {
 // 	const [activeComponent, setActiveComponent] = useState("Wallet")
 // 	const [sidebarOpen, setSidebarOpen] = useState(false)
+// 	const [username, setUsername] = useState("")
+
+// 	useEffect(() => {
+// 		// Assuming username is stored in localStorage after login
+// 		const storedUsername = localStorage.getItem("username")
+// 		if (storedUsername) {
+// 			setUsername(storedUsername)
+// 		}
+// 	}, [])
 
 // 	const renderComponent = () => {
 // 		switch (activeComponent) {
@@ -75,7 +85,7 @@
 // 							</svg>
 // 						</button>
 // 						<div className="flex items-center space-x-4">
-// 							<div className="text-lg text-white font-bold">Welcome Back Mohamed</div>
+// 							<div className="text-lg text-white font-bold">Welcome Back {username}</div>
 // 						</div>
 // 						<button className="text-gray-600 hover:text-black">
 // 							<div className="flex items-center justify-center bg-primary rounded-full w-12 h-12">
@@ -103,11 +113,14 @@ import Wallet from "../components/Wallet"
 import Income from "../components/Income"
 import Expense from "../components/Expenses"
 import Budget from "../components/Budget"
+import Profile from "../components/Profile"
+import axios from "axios"
 
 const Dashboard = () => {
 	const [activeComponent, setActiveComponent] = useState("Wallet")
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 	const [username, setUsername] = useState("")
+	const [showProfile, setShowProfile] = useState(false)
 
 	useEffect(() => {
 		// Assuming username is stored in localStorage after login
@@ -118,6 +131,9 @@ const Dashboard = () => {
 	}, [])
 
 	const renderComponent = () => {
+		if (showProfile) {
+			return <Profile />
+		}
 		switch (activeComponent) {
 			case "Wallet":
 				return <Wallet />
@@ -130,6 +146,22 @@ const Dashboard = () => {
 			default:
 				return <Wallet />
 		}
+	}
+
+	const handleLogout = () => {
+		axios
+			.post("/api/auth/logout", {}, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
+			.then(() => {
+				// Clear tokens and user info from localStorage
+				localStorage.removeItem("access_token")
+				localStorage.removeItem("refresh_token")
+				localStorage.removeItem("username")
+				// Redirect to login page or home page
+				window.location.href = "/login"
+			})
+			.catch((error) => {
+				console.error("There was an error logging out!", error)
+			})
 	}
 
 	return (
@@ -165,7 +197,7 @@ const Dashboard = () => {
 				</div>
 
 				<div className="py-4">
-					<button className="flex items-center space-x-2 text-xl px-10 hover:text-secondary transition-colors">
+					<button onClick={handleLogout} className="flex items-center space-x-2 text-xl px-10 hover:text-secondary transition-colors">
 						<FaSignOutAlt />
 						<span>Log Out</span>
 					</button>
@@ -184,14 +216,14 @@ const Dashboard = () => {
 						<div className="flex items-center space-x-4">
 							<div className="text-lg text-white font-bold">Welcome Back {username}</div>
 						</div>
-						<button className="text-gray-600 hover:text-black">
+						<button className="text-gray-600 hover:text-black" onClick={() => setShowProfile((prev) => !prev)}>
 							<div className="flex items-center justify-center bg-primary rounded-full w-12 h-12">
 								<FaUser className="text-white w-8 h-8" />
 							</div>
 						</button>
 					</header>
 				</div>
-				<div className="p-16 ">{renderComponent()}</div>
+				<div className="p-16">{renderComponent()}</div>
 				<footer className="bg-white text-primary fixed w-full bottom-0 right-0 py-4">
 					<div className="container mx-auto text-center">
 						<p className="text-sm">&copy; {new Date().getFullYear()} Budget Mita. All rights reserved.</p>

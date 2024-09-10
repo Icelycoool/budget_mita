@@ -70,29 +70,32 @@ class SignupResource(Resource):
         new_user.save()
         return make_response(jsonify({"message": f"User {username} created successfully!"}), 201)
 
-@auth_ns.route("/user/<int:id>")
+@auth_ns.route("/user")
 class ProfileResource(Resource):
 
     @auth_ns.marshal_with(signup_model)
     @jwt_required()
-    def get(self, id):
+    def get(self):
         """Get User by id"""
-        user = User.query.get_or_404(id)
+        user_id = get_jwt_identity()
+        user = User.query.filter_by(id=user_id).first_or_404()
         return user, 200
 
     @jwt_required()
-    def put(self, id):
+    def put(self):
         """Updates User by id"""
-        user_to_update = User.query.get_or_404(id)
+        user_id = get_jwt_identity()
+        user_to_update = User.query.filter_by(id=user_id).first_or_404()
         data = request.get_json()
         user_to_update.update(data.get("currency"))
         user_to_update.save()
         return make_response(jsonify({"message": "Your currency has been changed successfully"}), 200)
 
     @jwt_required()
-    def delete(self, id):
+    def delete(self):
         """Deletes a User"""
-        user_to_delete = User.query.get_or_404(id)
+        user_id = get_jwt_identity()
+        user_to_delete = User.query.filter_by(id=user_id).first_or_404()
         user_to_delete.delete()
         return make_response(jsonify({"message": "User deleted successfully"}), 200)
 
@@ -116,8 +119,8 @@ class LoginResource(Resource):
 
         # Check if the password is correct and log the user in
         if db_user and check_password_hash(db_user.password, password):
-            access_token = create_access_token(identity=db_user.username)
-            refresh_token = create_refresh_token(identity=db_user.username)
+            access_token = create_access_token(identity=db_user.id)
+            refresh_token = create_refresh_token(identity=db_user.id)
 
             return make_response(jsonify({"access_token": access_token, "refresh_token": refresh_token, "username": username}), 201)
       

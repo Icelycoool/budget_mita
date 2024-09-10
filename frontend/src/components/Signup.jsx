@@ -60,7 +60,7 @@ const Signup = () => {
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-100">
 			<div className="flex flex-col md:flex-row bg-white shadow-md rounded-lg overflow-hidden w-4/5 max-w-4xl">
-				{/* Left Side */}
+				{/* Left Side - Image */}
 				<div className="hidden md:block md:w-1/2">
 					<div className="relative w-full h-full nd:w-1/2">
 						<img src={finance} alt="Finance management" className="object-cover w-full h-full" />
