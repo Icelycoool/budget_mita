@@ -53,7 +53,6 @@ const Income = () => {
 				alert("Income updated successfully")
 				setEditingIncomeId(null)
 			} else {
-				// Add income
 				await axios.post("/api/income/", newIncome, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 				})
