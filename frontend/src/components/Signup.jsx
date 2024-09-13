@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import logo from "../assets/logo.svg"
 import finance from "../assets/finance.webp"
+import background from "../assets/bg-effect-1.png"
 
 const Signup = () => {
 	const navigate = useNavigate()
@@ -58,7 +59,7 @@ const Signup = () => {
 	}
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gray-100">
+		<div className="min-h-screen flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: `url(${background})` }}>
 			<div className="flex flex-col md:flex-row bg-white shadow-md rounded-lg overflow-hidden w-4/5 max-w-4xl">
 				{/* Left Side - Image */}
 				<div className="hidden md:block md:w-1/2">

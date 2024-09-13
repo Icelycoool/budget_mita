@@ -1,7 +1,7 @@
 from flask import request, jsonify, make_response
 from datetime import datetime
 from flask_restx import fields, Resource, Namespace
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.budget import Budget
 
 
@@ -13,8 +13,8 @@ budget_model = budget_ns.model(
         "id": fields.Integer(),
         "name": fields.String(),
         "amount": fields.Float(),
-        "start_date": fields.DateTime(),
-        "end_date": fields.DateTime(),
+        "start_date": fields.Date(),
+        "end_date": fields.Date(),
         "user_id": fields.Integer(),
     }
 )
@@ -26,6 +26,7 @@ class BudgetResource(Resource):
     @jwt_required()
     def post(self):
         """Create a new budget"""
+        user_id = get_jwt_identity()
         data = request.get_json()
         start_date = datetime.strptime(data.get('start_date'), '%Y-%m-%d')
         end_date = datetime.strptime(data.get('end_date'), '%Y-%m-%d')
@@ -34,7 +35,7 @@ class BudgetResource(Resource):
             amount = data.get('amount'),
             start_date = start_date,
             end_date = end_date,
-            user_id = data.get('user_id')
+            user_id = user_id
         )
         new_budget.save()
         return new_budget, 201

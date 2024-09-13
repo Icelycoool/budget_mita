@@ -18,6 +18,7 @@ export default {
 			whiteHover: "#E2E2E2",
 		},
 	},
+
 	plugins: [
 		function ({ addUtilities }) {
 			addUtilities({
