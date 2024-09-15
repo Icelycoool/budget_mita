@@ -42,8 +42,9 @@ class User(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self, currency):
+    def update(self, currency, password):
         """Update the user's details"""
+        self.password = password
         self.currency = currency
         db.session.add(self)
         db.session.commit()

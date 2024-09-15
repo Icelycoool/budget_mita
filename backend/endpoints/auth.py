@@ -1,8 +1,11 @@
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response, current_app
+from flask_mail import Message
 from flask_restx import fields, Resource, Namespace
+from  itsdangerous import URLSafeTimedSerializer
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt, get_jwt_identity
 from models.user import User
+from exts import mail
 
 
 
@@ -125,7 +128,63 @@ class LoginResource(Resource):
             return make_response(jsonify({"access_token": access_token, "refresh_token": refresh_token, "username": username}), 201)
       
         return make_response(jsonify({"message": "Invalid username or password"}), 401)
-            
+
+@auth_ns.route("/reset-password")    
+class ResetPasswordResource(Resource):
+    """Resets user password"""
+    def post(self):
+        """Sends password reset email"""
+        # Get the user email
+        data = request.get_json()
+        email = data.get("email")
+
+        # Check if the user exits
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return make_response(jsonify({"message": "Email not found!"}), 404)
+
+        # Serialize the email and generate a token
+        serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+        reset_token = serializer.dumps(email, salt=current_app.config['SECRET_KEY'])
+
+        # Create a reset link
+        reset_link = f"http://localhost:3000/reset-password/{reset_token}"
+
+        # Send the email
+        msg = Message(
+            subject="Reset Your Password",
+            sender=current_app.config["MAIL_DEFAULT_SENDER"],
+            recipients=[email],
+            body=f"Use the following token to reset your password: {reset_link}"
+        )
+ 
+        mail.send(msg)
+
+        return make_response(jsonify({"message": "Password reset email sent"}), 200)
+
+@auth_ns.route("/reset-password/<token>", methods=['POST'])
+class ResetPasswordWithTokenResource(Resource):
+    """Handles password reset using token"""
+    def post(self, token):
+        #Deserialize the the token and access the email
+        serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+        email = serializer.loads(token, salt=current_app.config['SECRET_KEY'], max_age=1800)
+
+        # Hash the newly created password
+        password = generate_password_hash(request.json.get('password'))
+
+        # Check if the user exits using the email
+        user = User.query.filter_by(email=email).first()
+
+        # Update teh user password
+        if user:
+            user.update(user.currency, password)
+            user.save()
+            return make_response(jsonify({"message": "Password has been reset successfully!"}), 200)
+            return make_response(jsonify({"message": "User not found"}), 404)
+
+
+
 @auth_ns.route("/refresh")
 class Refreshesource(Resource):
     """Refreshes the access token"""

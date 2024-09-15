@@ -8,7 +8,7 @@ from endpoints.wallets import wallets_ns
 from endpoints.income import income_ns
 from endpoints.expenses import expenses_ns
 from endpoints.budget import budget_ns
-from exts import db
+from exts import db, mail
 from models.wallet import Wallet
 from models.user import User
 from models.income import Income
@@ -27,6 +27,8 @@ def create_app(config):
     migrate = Migrate(app, db)
 
     JWTManager(app)
+
+    mail.init_app(app)
 
     api = Api(app, doc="/docs")
     api.add_namespace(auth_ns, path="/api/auth")

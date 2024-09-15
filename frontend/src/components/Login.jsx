@@ -75,7 +75,9 @@ const Login = () => {
 							/>
 						</div>
 						<div className="text-center mb-4">
-							<button className="text-primary font-bold hover:underline">Forgot password?</button>
+							<button className="text-primary font-bold hover:underline" onClick={() => navigate("/reset-password")}>
+								Forgot password?
+							</button>
 						</div>
 						<div className="mb-4">
 							<button type="submit" className="w-full bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondaryHover transition-colors" disabled={loading}>
@@ -97,7 +99,6 @@ const Login = () => {
 				<div className="hidden md:block md:w-1/2">
 					<div className="relative w-full h-full nd:w-1/2">
 						<img src={finance} alt="An image showing finance management" className="object-cover w-full h-full" />
-						<div className="absolute inset-0 bg-primary bg-blend-color-dodge opacity-60" />
 					</div>
 				</div>
 			</div>

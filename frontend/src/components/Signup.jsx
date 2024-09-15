@@ -65,7 +65,6 @@ const Signup = () => {
 				<div className="hidden md:block md:w-1/2">
 					<div className="relative w-full h-full nd:w-1/2">
 						<img src={finance} alt="Finance management" className="object-cover w-full h-full" />
-						<div className="absolute inset-0 bg-primary bg-blend-color-dodge opacity-60" />
 					</div>
 				</div>
 
