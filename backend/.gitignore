@@ -6,7 +6,7 @@ myenv/
 
 # Developments specific folders
 instance/
-migrations/
+
 
 # Python cache files
 __pycache__/
