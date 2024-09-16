@@ -1,7 +1,6 @@
 from main import create_app
-from config import DevConfig
+from config import ProdConfig
 
 
-if __name__ == '__main__':
-    app = create_app(DevConfig)
-    app.run(debug=True, port=5000)
+app = create_app(ProdConfig)
+app.run(debug=True, port=5000)

@@ -23,7 +23,10 @@ class DevConfig(Config):
     SQLALCHEMY_ECHO = True
 
 class ProdConfig(Config):
-    pass
+    SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI = config('DATABASE_URL')
+    DEBUG = config("DEBUG", cast=bool)
+    SQLALCHEMY_ECHO = config("ECHO", cast=bool)
+    SQLALCHEMY_TRACK_MODIFICATIONS = config("SQLALCHEMY_TRACK_MODIFICATIONS", cast=bool)
 
 class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = "sqlite:///test.db"
