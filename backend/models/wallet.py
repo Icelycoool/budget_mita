@@ -1,4 +1,5 @@
 from datetime import datetime
+from sqlalchemy.orm import relationship
 from .user import User
 from exts import db
 """Wallet Module"""
