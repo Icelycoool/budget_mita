@@ -22,6 +22,7 @@ signup_model = auth_ns.model(
         "email": fields.String(),
         "created_at": fields.DateTime(),
         "password": fields.String(),
+        "confirmation": fields.String(),
         "currency": fields.String(),
         "verified": fields.Boolean()
     }
