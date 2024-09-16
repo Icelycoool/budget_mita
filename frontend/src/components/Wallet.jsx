@@ -5,6 +5,7 @@ import OverlayImage from "../assets/overlay.png"
 import { FaEdit, FaTimes } from "react-icons/fa"
 
 const Wallet = () => {
+	const apiUrl = import.meta.env.VITE_API_BASE_URL
 	const [wallets, setWallets] = useState([])
 	const [newWallet, setNewWallet] = useState({ name: "", balance: "" })
 	const [errors, setErrors] = useState({ name: "", balance: "" })
@@ -13,7 +14,7 @@ const Wallet = () => {
 	useEffect(() => {
 		const fetchWallets = async () => {
 			try {
-				const response = await axios.get("/api/wallets/", {
+				const response = await axios.get(`${apiUrl}/api/wallets/`, {
 					headers: {
 						Authorization: `Bearer ${localStorage.getItem("token")}`,
 					},
@@ -25,7 +26,7 @@ const Wallet = () => {
 		}
 
 		fetchWallets()
-	}, [])
+	})
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target
@@ -54,7 +55,7 @@ const Wallet = () => {
 
 		try {
 			if (editingWallet) {
-				const response = await axios.put(`/api/wallets/${editingWallet.id}`, newWallet, {
+				const response = await axios.put(`${apiUrl}/api/wallets/${editingWallet.id}`, newWallet, {
 					headers: {
 						Authorization: `Bearer ${localStorage.getItem("token")}`,
 					},
@@ -64,7 +65,7 @@ const Wallet = () => {
 				setNewWallet({ name: "", balance: "" })
 				setEditingWallet(null)
 			} else {
-				const response = await axios.post("/api/wallets/", newWallet, {
+				const response = await axios.post(`${apiUrl}/api/wallets/`, newWallet, {
 					headers: {
 						Authorization: `Bearer ${localStorage.getItem("token")}`,
 					},
@@ -85,7 +86,7 @@ const Wallet = () => {
 
 	const handleDelete = async (walletId) => {
 		try {
-			await axios.delete(`/api/wallets/${walletId}`, {
+			await axios.delete(`${apiUrl}/api/wallets/${walletId}`, {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem("token")}`,
 				},

@@ -6,6 +6,7 @@ import finance from "../assets/finance.webp"
 import background from "../assets/bg-effect-1.png"
 
 const Signup = () => {
+	const apiUrl = import.meta.env.VITE_API_BASE_URL
 	const navigate = useNavigate()
 	const [formData, setFormData] = useState({
 		firstName: "",
@@ -41,7 +42,7 @@ const Signup = () => {
 		if (!validateForm()) return
 
 		try {
-			const response = await axios.post("/api/auth/signup", {
+			const response = await axios.post(`${apiUrl}/api/auth/signup`, {
 				first_name: formData.firstName,
 				last_name: formData.lastName,
 				username: formData.username,

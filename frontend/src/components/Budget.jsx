@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 
 const Budget = () => {
+	const apiUrl = import.meta.env.VITE_API_BASE_URL
 	const [history, setHistory] = useState([])
 	const [newBudget, setNewBudget] = useState({
 		name: "",
@@ -14,17 +15,17 @@ const Budget = () => {
 
 	useEffect(() => {
 		axios
-			.get("/api/budget/", {
+			.get(`${apiUrl}/api/budget/`, {
 				headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 			})
 			.then((response) => setHistory(response.data))
 			.catch((error) => console.error(error))
-	}, [])
+	})
 
 	const handleSaveOrUpdate = () => {
 		if (isEditing) {
 			axios
-				.put(`/api/budget/${editBudgetId}`, newBudget, {
+				.put(`${apiUrl}/api/budget/${editBudgetId}`, newBudget, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 				})
 				.then((response) => {
@@ -34,7 +35,7 @@ const Budget = () => {
 				.catch((error) => console.error(error))
 		} else {
 			axios
-				.post("/api/budget/", newBudget, {
+				.post(`${apiUrl}/api/budget/`, newBudget, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 				})
 				.then((response) => {
@@ -74,7 +75,7 @@ const Budget = () => {
 
 	const handleDelete = (id) => {
 		axios
-			.delete(`/api/budget/${id}`, {
+			.delete(`${apiUrl}/api/budget/${id}`, {
 				headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 			})
 			.then(() => {

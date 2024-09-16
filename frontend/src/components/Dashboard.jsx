@@ -9,6 +9,7 @@ import Profile from "../components/Profile"
 import axios from "axios"
 
 const Dashboard = () => {
+	const apiUrl = import.meta.env.VITE_API_BASE_URL
 	const [activeComponent, setActiveComponent] = useState("Wallet")
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 	const [username, setUsername] = useState("")
@@ -48,7 +49,7 @@ const Dashboard = () => {
 
 	const handleLogout = () => {
 		axios
-			.post("/api/auth/logout", {}, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
+			.post(`${apiUrl}/api/auth/logout`, {}, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
 			.then(() => {
 				localStorage.removeItem("access_token")
 				localStorage.removeItem("refresh_token")

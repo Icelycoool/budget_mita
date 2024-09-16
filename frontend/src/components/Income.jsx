@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 
 const Income = () => {
+	const apiUrl = import.meta.env.VITE_API_BASE_URL
 	const [wallets, setWallets] = useState([])
 	const [selectedWallet, setSelectedWallet] = useState("")
 	const [amount, setAmount] = useState("")
@@ -13,7 +14,7 @@ const Income = () => {
 	useEffect(() => {
 		const fetchWallets = async () => {
 			try {
-				const response = await axios.get("/api/wallets/", {
+				const response = await axios.get(`${apiUrl}/api/wallets/`, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 				})
 				setWallets(response.data)
@@ -24,7 +25,7 @@ const Income = () => {
 
 		const fetchIncomes = async () => {
 			try {
-				const response = await axios.get("/api/income/", {
+				const response = await axios.get(`${apiUrl}/api/income/`, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 				})
 				setHistory(response.data)
@@ -35,7 +36,7 @@ const Income = () => {
 
 		fetchWallets()
 		fetchIncomes()
-	}, [])
+	})
 
 	const handleAddOrUpdateIncome = async () => {
 		try {
@@ -47,13 +48,13 @@ const Income = () => {
 			}
 
 			if (editingIncomeId) {
-				await axios.put(`/api/income/${editingIncomeId}`, newIncome, {
+				await axios.put(`${apiUrl}/api/income/${editingIncomeId}`, newIncome, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 				})
 				alert("Income updated successfully")
 				setEditingIncomeId(null)
 			} else {
-				await axios.post("/api/income/", newIncome, {
+				await axios.post(`${apiUrl}/api/income/`, newIncome, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 				})
 				alert("Income added successfully")
@@ -65,7 +66,7 @@ const Income = () => {
 
 	const handleDeleteIncome = async (id) => {
 		try {
-			await axios.delete(`/api/income/${id}`, {
+			await axios.delete(`${apiUrl}/api/income/${id}`, {
 				headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 			})
 			setHistory(history.filter((income) => income.id !== id))

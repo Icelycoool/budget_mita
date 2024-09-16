@@ -6,6 +6,7 @@ import finance from "../assets/finance.webp"
 import background from "../assets/bg-effect-1.png"
 
 const Login = () => {
+	const apiUrl = import.meta.env.VITE_API_BASE_URL
 	const navigate = useNavigate()
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
@@ -24,7 +25,7 @@ const Login = () => {
 
 		try {
 			setLoading(true)
-			const response = await axios.post("/api/auth/login", { username, password })
+			const response = await axios.post(`${apiUrl}/api/auth/login`, { username, password })
 			const { access_token, username: user } = response.data
 			localStorage.setItem("token", access_token)
 			localStorage.setItem("username", user)

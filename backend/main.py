@@ -21,7 +21,7 @@ def create_app(config):
     app = Flask(__name__)
     app.config.from_object(config)
 
-    CORS(app, resources={r"/*": {"origins": "https://budget-mita-1.onrender.com"}})
+    CORS(app, resources={r"/api/*": {"origins": "https://budget-mita-1.onrender.com"}})
 
     db.init_app(app)
     migrate = Migrate(app, db)

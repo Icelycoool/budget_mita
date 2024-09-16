@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 
 const Expense = () => {
+	const apiUrl = import.meta.env.VITE_API_BASE_URL
 	const [wallets, setWallets] = useState([])
 	const [selectedWallet, setSelectedWallet] = useState("")
 	const [amount, setAmount] = useState("")
@@ -13,7 +14,7 @@ const Expense = () => {
 	useEffect(() => {
 		const fetchWallets = async () => {
 			try {
-				const response = await axios.get("/api/wallets/", {
+				const response = await axios.get(`${apiUrl}/api/wallets/`, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 				})
 				setWallets(response.data)
@@ -24,7 +25,7 @@ const Expense = () => {
 
 		const fetchExpenses = async () => {
 			try {
-				const response = await axios.get("/api/expenses/", {
+				const response = await axios.get(`${apiUrl}/api/expenses/`, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 				})
 				setHistory(response.data)
@@ -35,7 +36,7 @@ const Expense = () => {
 
 		fetchWallets()
 		fetchExpenses()
-	}, [])
+	})
 
 	const handleAddOrUpdateExpense = async () => {
 		try {
@@ -47,13 +48,13 @@ const Expense = () => {
 			}
 
 			if (editingExpenseId) {
-				await axios.put(`/api/expenses/${editingExpenseId}`, newExpense, {
+				await axios.put(`${apiUrl}/api/expenses/${editingExpenseId}`, newExpense, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 				})
 				alert("Expense updated successfully")
 				setEditingExpenseId(null)
 			} else {
-				await axios.post("/api/expenses/", newExpense, {
+				await axios.post(`${apiUrl}/api/expenses/`, newExpense, {
 					headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 				})
 				alert("Expense added successfully")
@@ -65,7 +66,7 @@ const Expense = () => {
 
 	const handleDeleteExpense = async (id) => {
 		try {
-			await axios.delete(`/api/expenses/${id}`, {
+			await axios.delete(`${apiUrl}/api/expenses/${id}`, {
 				headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
 			})
 			alert("Expense deleted successfully")

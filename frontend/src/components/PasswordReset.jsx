@@ -6,6 +6,7 @@ import finance from "../assets/finance.webp"
 import background from "../assets/bg-effect-1.png"
 
 const PasswordReset = () => {
+	const apiUrl = import.meta.env.VITE_API_BASE_URL
 	const navigate = useNavigate()
 	const { token } = useParams()
 	const [email, setEmail] = useState("")
@@ -33,7 +34,7 @@ const PasswordReset = () => {
 
 			try {
 				setLoading(true)
-				await axios.post("/api/auth/reset-password", { email })
+				await axios.post(`${apiUrl}/api/auth/reset-password`, { email })
 				navigate("/login")
 			} catch (err) {
 				if (err.response) {
@@ -57,7 +58,7 @@ const PasswordReset = () => {
 
 			try {
 				setLoading(true)
-				await axios.post(`/api/auth/reset-password/${token}`, { password })
+				await axios.post(`${apiUrl}/api/auth/reset-password/${token}`, { password })
 				navigate("/login")
 			} catch (err) {
 				if (err.response) {

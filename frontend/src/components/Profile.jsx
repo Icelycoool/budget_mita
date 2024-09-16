@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 
 const Profile = () => {
+	const apiUrl = import.meta.env.VITE_API_BASE_URL
 	const [userData, setUserData] = useState(null)
 	const [error, setError] = useState(null)
 	const [currency, setCurrency] = useState("")
@@ -9,7 +10,7 @@ const Profile = () => {
 	useEffect(() => {
 		const fetchUserData = async () => {
 			try {
-				const response = await axios.get("/api/auth/user", {
+				const response = await axios.get(`${apiUrl}/api/auth/user`, {
 					headers: {
 						Authorization: `Bearer ${localStorage.getItem("token")}`,
 					},
@@ -23,12 +24,12 @@ const Profile = () => {
 		}
 
 		fetchUserData()
-	}, [])
+	})
 
 	const handleUpdateCurrency = async () => {
 		try {
 			await axios.put(
-				"/api/auth/user",
+				`${apiUrl}/api/auth/user`,
 				{ currency },
 				{
 					headers: {
@@ -82,7 +83,7 @@ const Profile = () => {
 					className=" bg-accent text-white px-4 py-2 rounded-md hover:bg-accentHover transition-colors"
 					onClick={() =>
 						axios
-							.delete("/api/auth/user", {
+							.delete(`${apiUrl}/api/auth/user`, {
 								headers: {
 									Authorization: `Bearer ${localStorage.getItem("token")}`,
 								},
