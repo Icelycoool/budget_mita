@@ -27,6 +27,7 @@ class Wallet(db.Model):
     balance = db.Column(db.Float(), default=0.00)
     created_at = db.Column(db.Date(), default=datetime.today().date)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    user = relationship('User', back_populates='wallets')
 
 
     def __str__(self):
