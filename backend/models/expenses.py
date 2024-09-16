@@ -22,6 +22,7 @@ class Expense(db.Model):
         update(self, amount, category, wallet): Updates the expense in the database
         delete(self): Deletes the expense from the database
     """
+    __tablename__ = "expenses"
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     amount = db.Column(db.Float(), nullable=False, default=0.00)
     category = db.Column(db.String(), nullable=False)

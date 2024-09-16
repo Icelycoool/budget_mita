@@ -22,6 +22,7 @@ class Income(db.Model):
         update(self, amount, category, wallet): Updates the income with new values
         delete(self): Deletes the income from the database
     """
+    __tablename__ = "income"
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     amount = db.Column(db.Float(), nullable=False, default=0.00)
     category = db.Column(db.String(), nullable=False)

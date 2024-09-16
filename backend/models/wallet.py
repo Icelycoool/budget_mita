@@ -21,7 +21,7 @@ class Wallet(db.Model):
         delete(): Delete the wallet from the database
         update(name, balance): Update the name and balance of the wallet
     """
-
+    __tablename__ = "wallet"
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     name = db.Column(db.String(), nullable=False)
     balance = db.Column(db.Float(), default=0.00)

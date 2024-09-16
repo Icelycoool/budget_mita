@@ -22,6 +22,7 @@ class Budget(db.Model):
         update(amount, start_date, end_date): Updates the budget details
         delete(): Deletes the budget from the database
     """
+    __tablename__ = "budget"
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
     amount = db.Column(db.Float(), default=0.00)
