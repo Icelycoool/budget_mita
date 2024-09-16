@@ -1,5 +1,5 @@
 from datetime import datetime
-from . import user
+from .user import User
 from exts import db
 """Wallet Module"""
 
@@ -26,7 +26,7 @@ class Wallet(db.Model):
     name = db.Column(db.String(), nullable=False)
     balance = db.Column(db.Float(), default=0.00)
     created_at = db.Column(db.Date(), default=datetime.today().date)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("User.id"), nullable=False)
 
 
     def __str__(self):
