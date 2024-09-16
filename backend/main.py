@@ -41,7 +41,7 @@ def create_app(config):
     @api.route("/welcome")
     class WelcomeResource(Resource):
         def get(self):
-            return {"message": "Welcome to the Budget Mita API!"}
+            return {"message": "Welcome to the Budget Mita API. The Deployment Has wordked!"}
 
     @app.shell_context_processor
     def make_shell_context():
