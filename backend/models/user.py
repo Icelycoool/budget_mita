@@ -33,7 +33,7 @@ class User(db.Model):
     currency = db.Column(db.String(3), default="KES")
     verified = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.Date(), default=datetime.today().date)
-    wallets = db.relationship('Wallet', backref=db.backref("owner", lazy=True),cascade="all, delete-orphan")
+
 
     def __str__(self):
         return f"<User: {self.id} - {self.username} -Email: {self.email} - Joined:{self.created_at}>"
