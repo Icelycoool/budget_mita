@@ -34,7 +34,6 @@ class User(db.Model):
     verified = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.Date(), default=datetime.today().date)
 
-
     def __str__(self):
         return f"<User: {self.id} - {self.username} -Email: {self.email} - Joined:{self.created_at}>"
 

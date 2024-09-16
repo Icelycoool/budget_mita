@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy.orm import relationship
-from .user import User
+from . import user
 from exts import db
 """Wallet Module"""
 
@@ -28,7 +28,7 @@ class Wallet(db.Model):
     balance = db.Column(db.Float(), default=0.00)
     created_at = db.Column(db.Date(), default=datetime.today().date)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    user = db.relationship('User', backref='owner')
+    user = db.relationship('User', backref='user')
 
 
     def __str__(self):
