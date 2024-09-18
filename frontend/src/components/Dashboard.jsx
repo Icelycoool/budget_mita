@@ -54,7 +54,6 @@ const Dashboard = () => {
 			.post(`${apiUrl}/api/auth/logout`, {}, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
 			.then(() => {
 				localStorage.removeItem("access_token")
-				localStorage.removeItem("refresh_token")
 				localStorage.removeItem("username")
 				navigate("/login")
 			})
