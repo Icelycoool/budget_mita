@@ -36,7 +36,7 @@ const Expense = () => {
 
 		fetchWallets()
 		fetchExpenses()
-	})
+	}, [apiUrl])
 
 	const handleAddOrUpdateExpense = async () => {
 		try {

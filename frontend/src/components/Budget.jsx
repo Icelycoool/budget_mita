@@ -20,7 +20,7 @@ const Budget = () => {
 			})
 			.then((response) => setHistory(response.data))
 			.catch((error) => console.error(error))
-	})
+	}, [apiUrl])
 
 	const handleSaveOrUpdate = () => {
 		if (isEditing) {

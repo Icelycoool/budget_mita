@@ -24,7 +24,7 @@ const Profile = () => {
 		}
 
 		fetchUserData()
-	})
+	}, [apiUrl])
 
 	const handleUpdateCurrency = async () => {
 		try {

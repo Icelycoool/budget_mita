@@ -26,7 +26,7 @@ const Wallet = () => {
 		}
 
 		fetchWallets()
-	})
+	}, [apiUrl])
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target

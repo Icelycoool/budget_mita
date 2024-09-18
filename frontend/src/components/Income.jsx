@@ -36,7 +36,7 @@ const Income = () => {
 
 		fetchWallets()
 		fetchIncomes()
-	})
+	}, [apiUrl])
 
 	const handleAddOrUpdateIncome = async () => {
 		try {

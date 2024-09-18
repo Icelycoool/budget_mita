@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { FaWallet, FaMoneyBillWave, FaMoneyCheckAlt, FaBullseye, FaSignOutAlt, FaUser } from "react-icons/fa"
 import logo from "../assets/logo-white-01.svg"
 import Wallet from "../components/Wallet"
@@ -9,6 +10,7 @@ import Profile from "../components/Profile"
 import axios from "axios"
 
 const Dashboard = () => {
+	const navigate = useNavigate()
 	const apiUrl = import.meta.env.VITE_API_BASE_URL
 	const [activeComponent, setActiveComponent] = useState("Wallet")
 	const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -54,7 +56,7 @@ const Dashboard = () => {
 				localStorage.removeItem("access_token")
 				localStorage.removeItem("refresh_token")
 				localStorage.removeItem("username")
-				window.location.href = "/login"
+				navigate("/login")
 			})
 			.catch((error) => {
 				console.error("There was an error logging out!", error)

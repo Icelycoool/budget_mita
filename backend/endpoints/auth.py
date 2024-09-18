@@ -1,3 +1,4 @@
+from datetime import timedelta
 from flask import Flask, request, jsonify, make_response, current_app
 from flask_mail import Message
 from flask_restx import fields, Resource, Namespace
@@ -123,7 +124,7 @@ class LoginResource(Resource):
 
         # Check if the password is correct and log the user in
         if db_user and check_password_hash(db_user.password, password):
-            access_token = create_access_token(identity=db_user.id)
+            access_token = create_access_token(identity=db_user.id, expires_delta=timedelta(hours=1))
             refresh_token = create_refresh_token(identity=db_user.id)
 
             return make_response(jsonify({"access_token": access_token, "refresh_token": refresh_token, "username": username}), 201)
@@ -149,7 +150,7 @@ class ResetPasswordResource(Resource):
         reset_token = serializer.dumps(email, salt=current_app.config['SECRET_KEY'])
 
         # Create a reset link
-        reset_link = f"http://localhost:3000/reset-password/{reset_token}"
+        reset_link = f"https://budget-mita-1.onrender.com/reset-password/{reset_token}"
 
         # Send the email
         msg = Message(
