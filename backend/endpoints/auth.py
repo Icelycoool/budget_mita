@@ -157,7 +157,7 @@ class ResetPasswordResource(Resource):
             subject="Reset Your Password",
             sender=current_app.config["MAIL_DEFAULT_SENDER"],
             recipients=[email],
-            body=f"Use the following token to reset your password: {reset_link}"
+            body=f"Use the following token to reset your password:\t{reset_link}"
         )
  
         mail.send(msg)

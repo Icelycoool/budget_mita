@@ -304,7 +304,7 @@ const Landing = () => {
 							</p>
 
 							<div className="flex space-x-4 text-2xl">
-								<a href="http://linkedin.com/in/mohamedali350" target="_blank" rel="noopener noreferrer" className="text-secondaryHover hover:text-primary transition">
+								<a href="https://linkedin.com/in/mohamedali350" target="_blank" rel="noopener noreferrer" className="text-secondaryHover hover:text-primary transition">
 									<FaLinkedinIn />
 								</a>
 								<a href="https://github.com/Icelycoool" target="_blank" rel="noopener noreferrer" className="text-secondaryHover hover:text-primary transition">
