@@ -4,12 +4,12 @@
 
 ## About
 
-Budget Mita is a simple personal fiance app that is meant to help the user manage and track their finances.
+Budget Mita is a simple personal finance app that is meant to help the user manage and track their finances.
 
 ## Features
 
-- **Wallets** - Create seperate wallets for you finances. For example a wallet for Savings, Monthly Expenses etc.
-- **Transanction** - Record your income and expenses. When an income is received it goes to one of the wallets and the expenses are taken from the corresponding wallets.
+- **Wallets** - Create separate wallets for you finances. For example a wallet for Savings, Monthly Expenses etc.
+- **Transactions** - Record your income and expenses. When an income is received it goes to one of the wallets and the expenses are taken from the corresponding wallets.
 - **Budgeting** - The user can create a budget so that they can adjust their expenses according to the set budget.
 - **Report and insights** - Get insight into your expenses and get recommendations on how to improve.
 
@@ -17,8 +17,8 @@ Budget Mita is a simple personal fiance app that is meant to help the user manag
 
 - Backend: Flask.
 - Frontend: React, Tailwind.
-- Database: PostregSQL.
-- API: restx(for the creating RESTful API endpoint), axios(for making http request to the api endpoibnts).
+- Database: PostgreSQL.
+- API: RESTx(for the creating RESTful API endpoint), Axios(for making http request to the api endpoibnts).
 
 ## Contributing and Feedback
 
@@ -34,4 +34,4 @@ For comments and feedback you can reach out to me on:
 
 - [Linkedin](http://linkedin.com/in/mohamedali350)
 - [Twitter](https://x.com/mohamedcali350)
-- Email: mohamedcali350@gmail.com.com
+- Email: mohamedcali350@gmail.com
